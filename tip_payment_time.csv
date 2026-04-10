@@ -1,0 +1,31 @@
+Payment_Type,Time_of_Day,Avg_Tip_Pct,Trip_Count
+Cash,Afternoon,0.01,611379
+Cash,Evening,0.01,375100
+Cash,Morning,0.01,522134
+Cash,Night,0.0,229606
+Credit Card,Afternoon,25.24,830424
+Credit Card,Evening,25.34,688498
+Credit Card,Morning,26.17,648555
+Credit Card,Night,23.79,372182
+Dispute,Afternoon,0.0,1103
+Dispute,Evening,0.03,607
+Dispute,Morning,0.0,828
+Dispute,Night,0.0,353
+Mobile,Afternoon,18.88,283897
+Mobile,Evening,19.29,282299
+Mobile,Morning,18.88,327311
+Mobile,Night,18.29,140063
+No Charge,Afternoon,0.01,4300
+No Charge,Evening,0.0,3253
+No Charge,Morning,0.04,2403
+No Charge,Night,0.06,2077
+Prcard,Afternoon,1.02,279566
+Prcard,Evening,0.89,128792
+Prcard,Morning,0.95,263595
+Prcard,Night,0.64,79309
+Prepaid,Afternoon,0.0,3
+Prepaid,Morning,0.0,1
+Unknown,Afternoon,0.02,108748
+Unknown,Evening,0.01,51905
+Unknown,Morning,0.02,69536
+Unknown,Night,0.12,26386

@@ -1,0 +1,6 @@
+chicago_taxi_trips.csv
+chicago_taxi_2024_cleaned.csv
+.venv/
+__pycache__/
+*.pyc
+.DS_Store
