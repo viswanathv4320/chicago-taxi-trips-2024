@@ -1,3 +1,78 @@
+# Chicago Taxi Trips 2024 — Data Analysis Project
+
+A full end-to-end data analysis project using 6.3 million Chicago taxi trips from 2024. Covers data cleaning, exploratory data analysis, SQL querying, an interactive Tableau dashboard, and a live Flask web app.
+
+**GitHub:** https://github.com/viswanathv4320/chicago-taxi-trips-2024  
+**Tableau Dashboard:** https://public.tableau.com/app/profile/viswanath.vadlamani/viz/ChicagoTaxiTrips2024TableauDashboard/MarketOverview  
+**Live Web App:** https://chicago-taxi-trips-2024.onrender.com
+
+---
+
+## Table of Contents
+- [Project Overview](#project-overview)
+- [Dataset](#dataset)
+- [Tech Stack](#tech-stack)
+- [Project Structure](#project-structure)
+- [Data Cleaning](#data-cleaning)
+- [Key Business Questions](#key-business-questions)
+- [Key Findings](#key-findings)
+- [SQL Queries](#sql-queries)
+- [Tableau Dashboard](#tableau-dashboard)
+- [Flask Web App](#flask-web-app)
+- [How to Run](#how-to-run)
+
+---
+
+## Project Overview
+
+This project analyzes the City of Chicago's publicly available taxi trip dataset for the full year 2024. The goal was to uncover patterns in rider behavior, revenue trends, company performance, and tipping habits, and present them through SQL queries, an interactive Tableau dashboard, and a live data storytelling web app.
+
+---
+
+## Dataset
+
+**Source:** [Chicago Data Portal — Taxi Trips](https://data.cityofchicago.org/Transportation/Taxi-Trips-2024/ajtu-isnz)  
+**Size:** 6,334,213 trips after cleaning  
+**Period:** January 1, 2024 to December 31, 2024  
+**Columns:** 23 raw, expanded to 34 after feature engineering
+
+---
+
+## Tech Stack
+
+Python was used for data cleaning and EDA (pandas, numpy, matplotlib). MySQL handled schema design and analytical queries. Tableau Public was used for the interactive dashboard. Flask powers the data storytelling web app with Plotly for interactive charts. The app is deployed on Render and version controlled on GitHub.
+
+---
+
+## Project Structure
+
+```
+chicago_taxi_trips/
+├── app.py
+├── Procfile
+├── requirements.txt
+├── .gitignore
+├── data/
+│   ├── data_stats.csv
+│   ├── data_monthly.csv
+│   ├── data_heatmap.csv
+│   ├── data_company.csv
+│   └── data_payment.csv
+├── templates/
+│   └── index.html
+├── static/
+│   └── style.css
+├── notebooks/
+│   ├── 01_data_cleaning.ipynb
+│   ├── 02_eda.ipynb
+│   ├── 03_advanced_analysis.ipynb
+│   └── archive/
+│       └── data_preprocessing_original.ipynb
+├── sql_queries.py
+├── sql_analysis.py
+└── README.md
+```
+
 ---
 
 ## Data Cleaning
@@ -110,4 +185,4 @@ A data storytelling web app that presents the key findings as an interactive scr
 
 To run the Flask web app, clone the repo, set up a virtual environment, install dependencies with `pip install -r requirements.txt`, and run `python app.py`. The app will be available at `http://127.0.0.1:5000`.
 
-To run the full analysis, install the additional dependencies with `pip install pandas numpy matplotlib mysql-connector-python`, download the dataset from the Chicago Data Portal and place it in `data/`, run the cleaning notebook at `notebooks/eda.ipynb`, set up MySQL and create the `chicago_taxi` database, load the data with `python sql_queries.py`, and run the analysis with `python sql_analysis.py`.
+To run the full analysis, install the additional dependencies with `pip install pandas numpy matplotlib mysql-connector-python`, download the raw dataset from the Chicago Data Portal and place it in `data/` as `chicago_taxi_trips_raw.csv`, run the notebooks in order starting with `01_data_cleaning.ipynb`, set up MySQL and create the `chicago_taxi` database, load the data with `python sql_queries.py`, and run the analysis with `python sql_analysis.py`.
