@@ -2,6 +2,9 @@
 
 A full end-to-end data analysis project using 6.3 million Chicago taxi trips from 2024. Covers data cleaning, exploratory data analysis, SQL querying, and an interactive Tableau dashboard.
 
+**GitHub:** https://github.com/viswanathv4320/chicago-taxi-trips-2024  
+**Tableau Dashboard:** https://public.tableau.com/app/profile/viswanath.vadlamani/viz/ChicagoTaxiTrips2024TableauDashboard/MarketOverview
+
 ---
 
 ## Table of Contents
