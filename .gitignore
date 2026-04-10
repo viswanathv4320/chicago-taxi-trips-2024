@@ -4,3 +4,5 @@ chicago_taxi_2024_cleaned.csv
 __pycache__/
 *.pyc
 .DS_Store
+data/chicago_taxi_trips_raw.csv
+data/chicago_taxi_2024_cleaned.csv

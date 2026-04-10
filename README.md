@@ -1,77 +1,8 @@
-# Chicago Taxi Trips 2024 — Data Analysis Project
-
-A full end-to-end data analysis project using 6.3 million Chicago taxi trips from 2024. Covers data cleaning, exploratory data analysis, SQL querying, and an interactive Tableau dashboard.
-
-**GitHub:** https://github.com/viswanathv4320/chicago-taxi-trips-2024  
-**Tableau Dashboard:** https://public.tableau.com/app/profile/viswanath.vadlamani/viz/ChicagoTaxiTrips2024TableauDashboard/MarketOverview
-
----
-
-## Table of Contents
-- [Project Overview](#project-overview)
-- [Dataset](#dataset)
-- [Tech Stack](#tech-stack)
-- [Project Structure](#project-structure)
-- [Data Cleaning](#data-cleaning)
-- [Key Business Questions](#key-business-questions)
-- [Key Findings](#key-findings)
-- [SQL Queries](#sql-queries)
-- [Tableau Dashboard](#tableau-dashboard)
-- [How to Run](#how-to-run)
-
----
-
-## Project Overview
-
-This project analyzes the City of Chicago's publicly available taxi trip dataset for the full year 2024. The goal is to uncover patterns in rider behavior, revenue trends, company performance, and tipping habits — and present them through SQL queries and an interactive Tableau dashboard.
-
----
-
-## Dataset
-
-- **Source:** [Chicago Data Portal — Taxi Trips](https://data.cityofchicago.org/Transportation/Taxi-Trips-2024/ajtu-isnz)
-- **Size:** 6,334,213 trips after cleaning
-- **Period:** January 1, 2024 — December 31, 2024
-- **Columns:** 23 raw → 34 after feature engineering
-
----
-
-## Tech Stack
-
-- **Python** — data cleaning and EDA (pandas, numpy, matplotlib)
-- **MySQL** — schema design and analytical queries
-- **Tableau Public** — interactive dashboard
-- **GitHub** — version control
-
----
-
-## Project Structure
-
-```
-chicago_taxi_trips/
-├── data/
-│   └── chicago_taxi_2024_cleaned.csv
-├── notebooks/
-│   └── eda.ipynb
-├── sql_queries.py
-├── sql_analysis.py
-└── README.md
-```
-
 ---
 
 ## Data Cleaning
 
-The raw dataset required several cleaning steps before analysis:
-
-- Stripped `$` symbols and cast all financial columns (`Fare`, `Tips`, `Tolls`, `Extras`, `Trip Total`) to float
-- Parsed `Trip Start Timestamp` and `Trip End Timestamp` as datetime
-- Removed commas from `Trip Seconds` and `Trip Miles` and cast to numeric
-- Dropped ~17,000 rows where all financial columns were null
-- Removed rows with zero or negative fares, trip seconds, and trip totals
-- Capped outliers based on 99th percentile thresholds:
-  - Trip Miles > 60, Trip Minutes > 180, Fare > $200, Trip Total > $250, Speed MPH > 80, Tips > $100
-- Only 12,687 rows removed as outliers (0.2% of data)
+The raw dataset required several cleaning steps before analysis. Dollar signs were stripped and all financial columns cast to float. Timestamps were parsed as datetime. Commas were removed from Trip Seconds and Trip Miles. Around 17,000 rows where all financial columns were null were dropped, along with rows with zero or negative fares and trip totals. Outliers were capped at 99th percentile thresholds — trips over 60 miles, over 180 minutes, fares over $200, and speeds over 80 mph. Only 12,687 rows were removed as outliers, just 0.2% of the data.
 
 **Engineered Features:**
 
@@ -104,7 +35,7 @@ The raw dataset required several cleaning steps before analysis:
 
 **Outside the Box**
 
-7. Do Chicago's top pickup zones follow distinct demand archetypes — and can we classify them by behavior rather than just volume?
+7. Do Chicago's top pickup zones follow distinct demand archetypes, and can we classify them by behavior rather than just volume?
 8. Is mobile payment adoption growing through 2024, and is it displacing cash or credit card usage?
 9. What is the single best day and hour combination for a driver to maximize per-trip earnings?
 
@@ -113,59 +44,35 @@ The raw dataset required several cleaning steps before analysis:
 ## Key Findings
 
 ### Scale
-- **6.3M trips** and **$180M in total revenue** across 2024
-- Average fare of **$23.06** and average trip length of **6.93 miles**
+The dataset covers 6.3 million trips and $180 million in total revenue across 2024, with an average fare of $23.06 and average trip length of 6.93 miles.
 
 ### Time Patterns
-- **Night trips are the most lucrative** — highest avg fare ($25.74), longest distance (7.98 mi), fastest speed (23.19 mph), consistent with airport and highway runs
-- **Evening has the best tip rate** at 14.99% — riders are most generous after dinner and evening outings
-- **Weekday evenings are the most valuable slot overall** — combining high volume with a 15.25% tip rate
-- **Thursday is the busiest day** of the week; weekends drop off sharply, suggesting a strong business travel pattern
-- **Afternoon dominates volume** with 2.1M trips, but Night trips punch above their weight on revenue per trip
+Night trips are the most lucrative, with the highest average fare ($25.74), longest distance (7.98 miles), and fastest speed (23.19 mph), consistent with airport and highway runs. Evening has the best tip rate at 14.99%, and weekday evenings are the most valuable slot overall, combining high volume with a 15.25% tip rate. Thursday is the busiest day of the week, and weekends drop off sharply, suggesting a strong business travel pattern.
 
 ### Seasonal Trends
-- **Fall is the highest revenue season** at $48.4M total — surprising, beats Summer
-- **Winter is the slowest** season — shorter trips (6.58 mi avg), lower fares ($21.82), and the weakest tip rate (12.92%)
-- **May is the single busiest month** (605k trips); January is the quietest (415k)
+Fall is the highest revenue season at $48.4 million total, which is surprising given it beats summer. Winter is the slowest, with shorter trips, lower fares ($21.82 average), and the weakest tip rate at 12.92%. May is the single busiest month with 605,000 trips, while January is the quietest at 415,000.
 
 ### Payment and Tipping
-- **Credit card tip rate is 93.2%** vs Mobile at 84.5% — a significant behavioral gap
-- **Cash tips are $0.00** across the board — expected, as cash tips are not recorded in the dataset
-- Weekday night business travelers tip more ($26.54 avg fare) than weekend night riders ($23.92)
+Credit card tip rate is 93.2% compared to Mobile at 84.5%, a significant behavioral gap. Cash tips are $0 across the board, as expected since cash tips are not recorded in the dataset. Weekday night business travelers tip more ($26.54 average fare) than weekend night riders ($23.92).
 
 ### Companies
-- **Flash Cab leads in volume** (1.36M trips) but has the worst tip rate at just 7.88% — likely cash-heavy clientele
-- **5 Star Taxi commands the highest avg fare** ($26.12) and covers the most miles per trip (8.40) — clear premium positioning
-- **Taxicab Insurance Agency LLC and Sun Taxi** have strong tip rates (~16.8–16.9%) despite lower volumes
+Flash Cab leads in volume with 1.36 million trips but has the worst tip rate at just 7.88%, likely due to a cash-heavy clientele. 5 Star Taxi commands the highest average fare ($26.12) and covers the most miles per trip (8.40 miles), showing clear premium positioning. Taxicab Insurance Agency LLC and Sun Taxi have strong tip rates around 16.8 to 16.9% despite lower volumes.
 
 ### Trip Economics
-- **Short trips are the most expensive per mile** at $9.01/mi vs $2.69/mi for long trips — the base fare effect
-- **Short trips also tip the best** at 14.98% — likely city center rides with tipped credit card payments
-- **Long trips are clearly airport runs** — averaging 27.93 mph, well above the city average
+Short trips are the most expensive per mile at $9.01 compared to $2.69 for long trips, due to the base fare effect. Short trips also tip the best at 14.98%, likely city center rides with tipped credit card payments. Long trips are clearly airport runs, averaging 27.93 mph, well above the city average.
 
 ### Geography — Zone Archetypes
 
-Chicago taxi demand splits into 4 distinct behavioral archetypes:
-
-- **Airport zones** (76 O'Hare, 56 Midway) — highest fares ($39.93 and $34.72), active 24/7, long distance trips. O'Hare alone accounts for 1.37M pickups. Midway skews more leisure/balanced than O'Hare's business-heavy profile
-- **Business/commuter zones** (32 Loop, 28 Near West Side) — peak demand on weekday mornings and afternoons, almost dead on weekends. The Loop is 83% weekday trips — the strongest business signal of any zone
-- **Nightlife/residential zones** (8 Near North Side, 6 Lake View/Wrigleyville, 7 Lincoln Park) — strong evening demand, more balanced weekday/weekend ratio. Near North Side is the second busiest zone overall with 1.34M trips
-- **Tourism/events zones** (33 Near South Side/Museum Campus, 77 Edgewater) — afternoon and weekend driven, lower night activity
+Chicago taxi demand splits into four distinct behavioral archetypes. Airport zones (O'Hare and Midway) have the highest fares, are active 24/7, and handle long distance trips. O'Hare alone accounts for 1.37 million pickups. Business and commuter zones like the Loop peak on weekday mornings and afternoons and are almost dead on weekends — the Loop is 83% weekday trips, the strongest business signal of any zone. Nightlife and residential zones like Near North Side and Wrigleyville show strong evening demand with a more balanced weekday/weekend ratio. Tourism and events zones like the Near South Side and Museum Campus are afternoon and weekend driven with lower night activity.
 
 ### Outside the Box
-
-- **Mobile payments grew from 15.47% share in January to 19.32% in December** — a clear and consistent upward trend through 2024, while Cash steadily declined
-- **Monday midnight is the single best driver shift** — $40.25 avg earnings per trip, driven by long late-night airport and highway runs
-- **Short trips earn $23.49 per minute vs $1.23 for long trips** — the classic driver dilemma between quick city fares and high-value airport runs
-- **O'Hare evening trips tip the best** at 17.91% — returning travelers are the most generous tippers in the entire dataset
-- **Trips with both extras and tolls average $77.60 total** with a 19.45% tip rate — nearly 4x a standard city ride
-- **Strong taxi-zone loyalty exists** — some taxis made 3,978 trips from a single community area, suggesting experienced drivers deliberately stake out high-value zones
+Mobile payments grew from 15.47% share in January to 19.32% in December, a clear and consistent upward trend while cash steadily declined. Monday midnight is the single best driver shift at $40.25 average earnings per trip, driven by long late-night airport runs. Short trips earn $23.49 per minute versus $1.23 for long trips, the classic driver dilemma between quick city fares and high-value airport runs. O'Hare evening trips tip the best at 17.91%, making returning travelers the most generous tippers in the entire dataset. Trips with both extras and tolls average $77.60 total with a 19.45% tip rate, nearly four times a standard city ride. Strong taxi-zone loyalty also exists, with some taxis making 3,978 trips from a single community area.
 
 ---
 
 ## SQL Queries
 
-Nine analytical queries written in MySQL covering window functions, CTEs, and aggregations:
+Nine analytical queries written in MySQL, covering window functions, CTEs, and aggregations.
 
 | # | Query | Technique |
 |---|---|---|
@@ -185,27 +92,22 @@ Nine analytical queries written in MySQL covering window functions, CTEs, and ag
 
 **[View on Tableau Public →](https://public.tableau.com/app/profile/viswanath.vadlamani/viz/ChicagoTaxiTrips2024TableauDashboard/MarketOverview)**
 
-### Dashboard 1 — Market Overview
-- Revenue zone map by Chicago community area (colored by total revenue)
-- Zone archetype map (Airport / Business / Nightlife / Tourism classification)
-- Month-over-month revenue trend line with average reference line
-- Hourly demand heatmap (Day × Hour) showing peak demand patterns
-- Average fare by time of day (Morning / Afternoon / Evening / Night)
+The first dashboard covers the market overview with a revenue zone map by Chicago community area, a zone archetype map, a month-over-month revenue trend line, an hourly demand heatmap, and average fare by time of day.
 
-### Dashboard 2 — Driver & Company Intelligence
-- Company scorecard — dual axis chart comparing trip volume vs tip rate
-- Payment mix trend — monthly share of Credit Card / Mobile / Cash (Jan–Dec)
-- Tip rate matrix — payment type × time of day heatmap
-- Trip type economics — fare per mile comparison (Short / Medium / Long trips)
+The second dashboard focuses on driver and company intelligence with a company scorecard comparing trip volume vs tip rate, a payment mix trend showing monthly share of Credit Card, Mobile, and Cash from January to December, a tip rate matrix by payment type and time of day, and a trip type economics comparison by fare per mile.
+
+---
+
+## Flask Web App
+
+**[Live App → chicago-taxi-trips-2024.onrender.com](https://chicago-taxi-trips-2024.onrender.com)**
+
+A data storytelling web app that presents the key findings as an interactive scrollable article. Built with Flask and Plotly and deployed on Render. The app features a header with live KPIs, a monthly revenue line chart, a trip volume heatmap by day and hour, a company performance bar chart, a payment type breakdown, and an embedded Tableau zone map.
 
 ---
 
 ## How to Run
 
-1. Clone the repo and set up a virtual environment
-2. Install dependencies: `pip install pandas numpy matplotlib mysql-connector-python`
-3. Download the dataset from the Chicago Data Portal and place it in `data/`
-4. Run the cleaning notebook: `notebooks/eda.ipynb`
-5. Set up MySQL and create the `chicago_taxi` database
-6. Load data into MySQL: `python sql_queries.py`
-7. Run the analysis queries: `python sql_analysis.py`
+To run the Flask web app, clone the repo, set up a virtual environment, install dependencies with `pip install -r requirements.txt`, and run `python app.py`. The app will be available at `http://127.0.0.1:5000`.
+
+To run the full analysis, install the additional dependencies with `pip install pandas numpy matplotlib mysql-connector-python`, download the dataset from the Chicago Data Portal and place it in `data/`, run the cleaning notebook at `notebooks/eda.ipynb`, set up MySQL and create the `chicago_taxi` database, load the data with `python sql_queries.py`, and run the analysis with `python sql_analysis.py`.

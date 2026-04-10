@@ -5,11 +5,11 @@ import json
 app = Flask(__name__)
 
 # Load pre-aggregated data — fast to load
-stats_df = pd.read_csv("data_stats.csv")
-monthly_df = pd.read_csv("data_monthly.csv")
-heatmap_df = pd.read_csv("data_heatmap.csv")
-company_df = pd.read_csv("data_company.csv")
-payment_df = pd.read_csv("data_payment.csv")
+stats_df   = pd.read_csv("data/data_stats.csv")
+monthly_df = pd.read_csv("data/data_monthly.csv")
+heatmap_df = pd.read_csv("data/data_heatmap.csv")
+company_df = pd.read_csv("data/data_company.csv")
+payment_df = pd.read_csv("data/data_payment.csv")
 
 @app.route("/")
 def index():
