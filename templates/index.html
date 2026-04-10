@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Chicago Taxi 2024</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <script src="https://cdn.jsdelivr.net/npm/plotly.js-dist@2.27.0/plotly.min.js"></script>
+</head>
+<body>
+
+  <!-- Header -->
+  <header>
+    <h1>Chicago Taxi Trips 2024</h1>
+    <p class="subtitle">An analysis of 6.3 million rides across the city</p>
+    <div class="stats-row">
+      <div class="stat-card">
+        <span class="stat-value">{{ stats.total_trips }}</span>
+        <span class="stat-label">Total Trips</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-value">{{ stats.total_revenue }}</span>
+        <span class="stat-label">Total Revenue</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-value">{{ stats.avg_fare }}</span>
+        <span class="stat-label">Avg Fare</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-value">{{ stats.avg_tip_pct }}</span>
+        <span class="stat-label">Avg Tip %</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- Section 1: Revenue -->
+  <section>
+    <h2>Revenue Over Time</h2>
+    <p class="insight">Fall was the strongest season, peaking in October. Winter months lag behind — fewer tourists, harsher weather.</p>
+    <div id="revenue-chart"></div>
+  </section>
+
+  <!-- Section 2: Heatmap -->
+  <section>
+    <h2>When Do People Ride?</h2>
+    <p class="insight">Weekday evenings dominate. Thursday is the busiest day — the combination of commuters and early weekend activity.</p>
+    <div id="heatmap-chart"></div>
+  </section>
+
+  <!-- Section 3: Companies -->
+  <section>
+    <h2>Who's Driving Chicago?</h2>
+    <p class="insight">Flash Cab leads in volume but trails in tips. 5 Star Taxi commands higher fares — a clear premium vs volume split.</p>
+    <div id="company-chart"></div>
+  </section>
+
+  <!-- Section 4: Payment -->
+  <section>
+    <h2>How People Pay</h2>
+    <p class="insight">Credit card dominates, but mobile payments grew steadily through the year — from 15% in January to 19% by December.</p>
+    <div id="payment-chart"></div>
+  </section>
+
+  <!-- Section 5: Zone Map -->
+  <section>
+    <h2>Where the City Rides</h2>
+    <p class="insight">O'Hare alone accounts for 41% of all revenue. Four zone archetypes emerge: Airport, Business, Nightlife, and Tourism.</p>
+    <div class="tableau-wrapper">
+      <iframe src="https://public.tableau.com/views/ChicagoTaxiTrips2024TableauDashboard/MarketOverview?:showVizHome=no&:embed=true"
+              width="100%" height="600" frameborder="0"></iframe>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <p>
+      <a href="https://github.com/viswanath.vadlamani" target="_blank">GitHub</a> ·
+      <a href="https://public.tableau.com/app/profile/viswanath.vadlamani/viz/ChicagoTaxiTrips2024TableauDashboard/MarketOverview" target="_blank">Tableau Public</a>
+    </p>
+    <p class="footer-note">Data source: City of Chicago Data Portal · Analysis by Viswanath Vadlamani</p>
+  </footer>
+
+  <!-- Chart rendering -->
+  <script>
+  var r = {{ revenue_chart | safe }};
+  var monthNames = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+  Plotly.newPlot("revenue-chart", [{
+    type: "scatter",
+    mode: "lines",
+    x: r.x.map(function(m) { return monthNames[m-1]; }),
+    y: r.y
+  }], {
+    title: "Monthly Revenue 2024",
+    xaxis: {title: "Month"},
+    yaxis: {title: "Revenue ($M)"}
+  });
+
+  var h = {{ heatmap_chart | safe }};
+  Plotly.newPlot("heatmap-chart", [{
+    type: "heatmap",
+    x: h.hours,
+    y: h.days,
+    z: h.z,
+    colorscale: [[0, "#eaf4fb"], [0.5, "#5aace4"], [1, "#0c3a6e"]]
+  }], {
+    title: "Trip Volume by Day and Hour",
+    xaxis: {title: "Hour of Day"},
+    yaxis: {title: "Day", autorange: "reversed"}
+  });
+
+  var c = {{ company_chart | safe }};
+  Plotly.newPlot("company-chart", [{
+    type: "bar",
+    x: c.labels,
+    y: c.values
+  }], {title: "Top 10 Companies by Trip Volume", margin: {b: 150}});
+
+  var p = {{ payment_chart | safe }};
+  Plotly.newPlot("payment-chart", [{
+    type: "pie",
+    labels: p.labels,
+    values: p.values
+  }], {title: "Payment Type Breakdown"});
+</script>
+</body>
+</html>
